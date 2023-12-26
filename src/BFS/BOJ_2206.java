@@ -8,8 +8,8 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 // https://www.acmicpc.net/problem/2206 (벽 부수고 이동하기)
-public class BOJ_2206 {
 
+public class BOJ_2206 {
     static int N, M;
     static int[][] map;
     static boolean[][][] visited;
@@ -36,7 +36,6 @@ public class BOJ_2206 {
         bfs();
 
         System.out.println(ans);
-
     }
 
     private static void bfs() {
