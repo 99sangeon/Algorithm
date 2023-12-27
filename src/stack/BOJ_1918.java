@@ -13,7 +13,6 @@ public class BOJ_1918 {
 
         Stack<Character> stack = new Stack<>();
         StringBuilder sb = new StringBuilder();
-        boolean flag = false;
 
         for(int i = 0; i < str.length(); i++) {
 
