@@ -75,7 +75,7 @@ public class BOJ_12851 {
         }
     }
 
-    public static class Node {
+    private static class Node {
         int loc;
         int dis;
 
