@@ -80,7 +80,7 @@ public class BOJ_2206 {
         }
     }
 
-    public static class Node {
+    private static class Node {
         int x;
         int y;
         int dis;
