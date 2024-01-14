@@ -12,8 +12,8 @@ import java.util.StringTokenizer;
 public class BOJ_1238 {
 
     static int N, M, X, ans;
-    static int[] distances;
-    static List<Node>[] map;
+    static int[] distances, distances_reverse;
+    static List<Node>[] map, map_reverse;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,11 +22,14 @@ public class BOJ_1238 {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
         X = Integer.parseInt(st.nextToken());
-        distances =new int[N+1];
+        distances = new int[N+1];
+        distances_reverse = new int[N+1];
         map = new List[N+1];
+        map_reverse = new List[N+1];
 
         for(int i = 1; i <= N; i++) {
             map[i] = new ArrayList();
+            map_reverse[i] = new ArrayList<>();
         }
 
         for(int i = 0; i < M; i++) {
@@ -36,48 +39,22 @@ public class BOJ_1238 {
             int dis = Integer.parseInt(st.nextToken());
 
             map[from].add(new Node(to, dis));
+            map_reverse[to].add(new Node(from, dis));
         }
+
+        // 각각의 집에서 목적지까지 최단 거리
+        bfs(distances_reverse, map_reverse);
+        // 목적지에서 각각의 집까지 최단 거리
+        bfs(distances, map);
 
         for(int i = 1; i <= N; i++) {
-            // i번째 마을에서 X(목적지)까지 최단거리
-            distances[i] = bfs(i);
+            ans = Math.max(ans, distances[i] + distances_reverse[i]);
         }
-
-        solve();
 
         System.out.println(ans);
     }
 
-    private static int bfs(int from) {
-        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> Integer.compare(o1.dis, o2.dis));
-        pq.add(new Node(from, 0));
-
-        int distance = 0;
-        boolean[] visited = new boolean[N+1];
-
-        while (!pq.isEmpty()) {
-            Node curr = pq.poll();
-
-            if(curr.node == X) {
-                distance = curr.dis;
-                break;
-            }
-
-            if(visited[curr.node]) continue;
-
-            visited[curr.node] = true;
-
-            for (Node next : map[curr.node]) {
-                if(!visited[next.node]) {
-                    pq.add(new Node(next.node, curr.dis + next.dis));
-                }
-            }
-        }
-
-        return distance;
-    }
-
-    private static void solve() {
+    private static void bfs(int[] distances, List<Node>[] map) {
         PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> Integer.compare(o1.dis, o2.dis));
         pq.add(new Node(X, 0));
 
@@ -88,11 +65,9 @@ public class BOJ_1238 {
 
             if(visited[curr.node]) continue;
 
+            // 해당 위치의 노드 방문 처리 및 최단거리 세팅
             visited[curr.node] = true;
-
-            // 특정 마을에서 X 마을까지의 최단거리 + X 마을에서 특정 마을까지의 최단거리
-            int temp = distances[curr.node] + curr.dis;
-            ans = Math.max(ans, temp);
+            distances[curr.node] = curr.dis;
 
             for (Node next : map[curr.node]) {
                 if(!visited[next.node]) {
@@ -100,6 +75,7 @@ public class BOJ_1238 {
                 }
             }
         }
+
     }
 
     private static class Node {
