@@ -15,8 +15,7 @@ public class BOJ_5639 {
 
         Node root = new Node(Integer.parseInt(br.readLine()));
 
-        int cnt = 10000;
-        while (cnt > 0) {
+        while (true) {
             try {
                 int num = Integer.parseInt(br.readLine());
                 // 입력받은 num을 적절한 위치에 삽입
