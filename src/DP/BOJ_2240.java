@@ -44,14 +44,16 @@ public class BOJ_2240 {
     private static int solution(int t, int w, int n) {
         if(t > T) return 0;
 
+        // 이미 값을 갱신한 적 있다면 별도의 과정 없이 값을 즉시 반환(이 부분이 없다면 시간초과 발생)
         if(dp[t][w][n] > -1) return dp[t][w][n];
 
-        if(w < W) {
+        if(w < W) {  // 이동 횟수가 남아서 더 이동할 수 있음
             dp[t][w][n] = Math.max(solution(t+1, w, n), solution(t+1, w+1, (n+1)%2));
-        } else {
+        } else {     // 이동 횟수를 다 사용해서 더이상 이동할 수 없음
             dp[t][w][n] = solution(t+1, w, n);
         }
 
+        // 해당 시간에 해당 위치로 자두가 떨어져서 자두를 먹을 수 있음
         if(arr[t] == n) dp[t][w][n]++;
 
         return dp[t][w][n];
