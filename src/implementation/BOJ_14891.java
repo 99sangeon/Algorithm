@@ -78,6 +78,4 @@ public class BOJ_14891 {
             gear.add(remove);
         }
     }
-
-
 }
